@@ -1,10 +1,9 @@
 
-import { Box, TextField, Button, Typography, Divider, } from "@mui/material"
-import { useStoreActions } from "easy-peasy";
+import { Box, Button, Divider, TextField, Typography, } from "@mui/material";
 import { useFormik } from "formik";
-import * as yup from 'yup'
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from 'yup';
 import useAuth from "../../../hooks/useAuth";
-import { useNavigate, Link } from "react-router-dom"
 
 const SignInPage = () => {
 
@@ -31,7 +30,7 @@ const SignInPage = () => {
         onSubmit: (values, action) => {
             console.log("value", values)
             handelLogin(values)
-            action.resetForm()
+            // action.resetForm()
             navigate("/")
         },
         validationSchema: personSchema
@@ -129,20 +128,6 @@ const SignInPage = () => {
                     }}>Sign Up</Link>
 
             </Box>
-            {/* <Button
-                fullWidth
-                sx={{
-                    my: 2,
-                    fontSize: 18,
-                    color: '#fff',
-                    bgcolor: ' #3C1FF4',
-                    ":hover": {
-                        bgcolor: '#3C1FF4'
-                    }
-                }}
-            >
-                SignUp
-            </Button> */}
         </Box>
     )
 }

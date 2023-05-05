@@ -1,20 +1,22 @@
 
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import useData from "../../hooks/useData"
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import CustomPagination from '../../components/coustom-pagination';
+import { PAGE_SIZE } from '../../const';
+import useData from "../../hooks/useData";
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -45,8 +47,8 @@ function createData(name, calories, fat, carbs, protein) {
 
 const ColorList = () => {
 
-    const { data, deleteData } = useData("/colors")
-
+    const { data, deleteData, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = useData(`/colors?page=1&limit=${PAGE_SIZE}`)
+    const navigate = useNavigate()
     return (
         <Box>
             <Box textAlign="center" mb={2}>
@@ -62,11 +64,11 @@ const ColorList = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data?.map((row) => (
+                        {data?.data?.map((row) => (
                             <StyledTableRow key={row.name}>
                                 <StyledTableCell sx={{ p: 1 }} component="th" scope="row">{row.name}</StyledTableCell>
                                 <StyledTableCell sx={{ p: 0 }} align="right">
-                                    <Button sx={{}}><EditIcon color="secondary.light" /></Button>
+                                    <Button sx={{}} onClick={() => navigate(`/color/edit/${row._id}`)}><EditIcon color="secondary.light" /></Button>
                                     <Button sx={{}}
                                         onClick={() => { if (window.confirm('Are you sure you wish to delete this?')) deleteData(row._id) }}
                                     ><DeleteIcon color="error" /></Button>
@@ -75,6 +77,13 @@ const ColorList = () => {
                         ))}
                     </TableBody>
                 </Table>
+                <CustomPagination
+                    currentPage={data?.currentPage}
+                    totalDocument={data?.totalDocument}
+                    handleChangePage={handleChangePage}
+                    rowsPerPage={rowsPerPage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                />
             </TableContainer>
         </Box >
     )

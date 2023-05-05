@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth";
 
 const SignUpPage = () => {
-    const { HandelRegistration } = useAuth()
+    const { handelRegister } = useAuth()
 
     const navigate = useNavigate()
 
@@ -39,7 +39,7 @@ const SignUpPage = () => {
         initialValues,
         onSubmit: (values, action) => {
             console.log("value", values)
-            HandelRegistration(values)
+            handelRegister(values)
             action.resetForm()
             navigate("/")
         },

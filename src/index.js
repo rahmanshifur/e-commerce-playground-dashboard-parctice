@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import App from './app';
+// import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import { StoreProvider } from 'easy-peasy'
+import { StoreProvider } from 'easy-peasy';
 
 import Store from './store';
 

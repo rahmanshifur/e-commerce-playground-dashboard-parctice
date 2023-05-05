@@ -1,55 +1,66 @@
-import jwtDecode from 'jwt-decode';
-import { useStoreActions } from "easy-peasy";
-import api from "../service"
-import { useNavigate } from "react-router-dom"
-
+import { useStoreActions, useStoreState } from 'easy-peasy'
+import jwtDecode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
+import api from '../service'
+import useData from './useData'
 
 const useAuth = () => {
-    // Global Action
-    const authAction = useStoreActions((action) => action.auth);
 
-    const navigate = useNavigate()
+    const authAction = useStoreActions((action) => action.auth)
+    const isAuth = useStoreState(state => state.auth.isAuth)
+    const authUser = useStoreState(state => state.auth.user)
+    const token = useStoreState(state => state.auth.token)
 
+    const Navigate = useNavigate()
 
-    // Handel Login
-    const handelLogin = async (values) => {
+    const { clearData } = useData()
+
+    // Handel login
+    const handelLogin = async (value) => {
         try {
-            const res = await api.post("/auth/login", values)
-            const token = res.data.data;
+            const res = await api.post('/auth/login', value)
+            const token = res.data.payload
             const user = jwtDecode(token)
             authAction.login({
                 user,
                 token
-            });
+            })
+            // setAuthToken(token)
+            return true
         } catch (error) {
-            console.log("error", error.response.data.message)
+            console.log('e', error)
+            return false
+        }
+
+    }
+
+    // Handel Register
+
+    const handelRegister = async (value) => {
+        try {
+            const res = await api.post('/auth/register', value)
+            console.log('res', res)
+        } catch (e) {
+            console.log(e.response.data.massage)
         }
     }
 
-    // Handel Logout
+    // Hendel Logout
 
     const handelLogout = () => {
         authAction.logout()
-        navigate('/')
+        // clearAuthToken()
+        // clearData()
+        Navigate('/')
     }
-
-    // Handel registration
-
-
-    const HandelRegistration = async (values) => {
-        try {
-            const res = await api.post("/auth/register", values)
-            console.log("res", res)
-        } catch (error) {
-            console.log('error', error)
-        }
-    }
-
 
     return {
+        isAuth,
+        authUser,
+        token,
         handelLogin,
-        handelLogout,
-        HandelRegistration
+        handelRegister,
+        handelLogout
     }
 }
 export default useAuth

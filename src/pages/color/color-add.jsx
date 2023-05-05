@@ -1,16 +1,16 @@
 
 
-import React from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { TextField, Button, Box, Typography } from '@mui/material';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useData from '../../hooks/useData';
-import { useNavigate } from 'react-router-dom'
 
 const ColorAdd = () => {
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
-    const { createData } = useData("/colors")
+    const { createHandler } = useData("/colors")
 
     const initialValues = {
         name: '',
@@ -20,9 +20,9 @@ const ColorAdd = () => {
         initialValues,
         onSubmit: (values, action) => {
             console.log(values);
-            createData(values)
-              navigate('/color/list')
-            },
+            createHandler(values)
+            navigate('/color/list')
+        },
     });
 
     const handleReset = () => {

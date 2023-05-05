@@ -2,11 +2,23 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    timeout: 5000,
+    timeout: 25000,
     headers: {
         'Content-type': 'application/json',
         Accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzM2OGY5ZTQ3NzVmODZkMmNlOTdkZTQiLCJmaXJzdE5hbWUiOiJNZCIsImxhc3ROYW1lIjoiUmFiYnkiLCJlbWFpbCI6InJhYmJ5QGdtYWlsLmNvbSIsInN0YXR1cyI6MSwidHlwZSI6MSwiaWF0IjoxNjc5NDY4MjcwLCJleHAiOjE2ODA3NjQyNzB9.WFyagy_ISnBrkH9k4Py9W6H76R056iASdHWwuw7FUMg',
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDQ4MWYxODUxNTk2NDk4NGQ5MTJjYjkiLCJmaXJzdE5hbWUiOiJTaWFtIiwibGFzdE5hbWUiOiJIYXdsYWRhciIsImVtYWlsIjoic2lhbUBnbWFpbC5jb20iLCJzdGF0dXMiOjEsInR5cGUiOjEsImlhdCI6MTY4MzI1NDU2OCwiZXhwIjoxNjg0NTUwNTY4fQ.ZT5ke1DXEI7_xHWq7c28tyvvh67hoIdXQ4OaNDEEPYw"
+
     },
 });
+
+// export const setAuthToken = (authToken = null) => {
+//     localStorage.setItem('authToken', authToken)
+//     api.defaults.headers.common['Authorization'] = authToken;
+// }
+
+// export const clearAuthToken = () => {
+//     localStorage.removeItem('authToken')
+//     api.defaults.headers.common['Authorization'] = '';
+// }
+
 export default api;
